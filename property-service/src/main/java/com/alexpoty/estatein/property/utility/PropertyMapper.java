@@ -2,11 +2,13 @@ package com.alexpoty.estatein.property.utility;
 
 import com.alexpoty.estatein.property.dto.PropertyRequest;
 import com.alexpoty.estatein.property.dto.PropertyResponse;
+import com.alexpoty.estatein.property.exception.PropertyNotFoundException;
 import com.alexpoty.estatein.property.model.Property;
 
 public class PropertyMapper {
 
     public static Property convertToModel(PropertyRequest propertyRequest) {
+        if (propertyRequest == null) throw new PropertyNotFoundException("Property Not Found");
         return Property.builder()
                 .id(propertyRequest.id())
                 .title(propertyRequest.title())
@@ -18,6 +20,7 @@ public class PropertyMapper {
     }
 
     public static PropertyResponse convertToResponse(Property property) {
+        if (property == null) throw new PropertyNotFoundException("Property not found");
         return new PropertyResponse(
                 property.getId(),
                 property.getTitle(),
