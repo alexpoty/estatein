@@ -6,6 +6,7 @@ import com.alexpoty.estatein.property.service.PropertyServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -53,57 +54,69 @@ class PropertyControllerTest {
     }
 
     @Test
+    @DisplayName("Should return list of properties")
     void PropertyController_GetProperties_ReturnListOfProperty() throws Exception {
+        // Arrange
         when(propertyService.getAllProperties()).thenReturn(propertyResponses);
-
+        // Act
         ResultActions resultActions = mockMvc.perform(get("/api/property")
                 .contentType(MediaType.APPLICATION_JSON));
-
+        // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(1)));
     }
 
     @Test
+    @DisplayName("Should find property by id and return it")
     void PropertyController_GetPropertyById_ReturnProperty() throws Exception {
+        // Arrange
         when(propertyService.getProperty(anyLong())).thenReturn(propertyResponse);
-
+        //Act
         ResultActions resultActions = mockMvc.perform(get("/api/property/1")
                 .contentType(MediaType.APPLICATION_JSON));
-
+        // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is("TestProperty")));
     }
 
     @Test
+    @DisplayName("Should create property and then return it")
     void PropertyController_CreateProperty_ReturnCreated() throws Exception {
+        // Arrange
         when(propertyService.createProperty(any(PropertyRequest.class))).thenReturn(propertyResponse);
-
+        // Act
         ResultActions resultActions = mockMvc.perform(post("/api/property")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(propertyRequest)));
+        // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is("TestProperty")));
     }
 
     @Test
+    @DisplayName("Should update property and then return it")
     void PropertyController_UpdateProperty_ReturnUpdatedProperty() throws Exception {
+        // Arrange
         when(propertyService.updateProperty(anyLong(), any(PropertyRequest.class))).thenReturn(propertyResponse);
-
+        // Act
         ResultActions resultActions = mockMvc.perform(put("/api/property/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(propertyRequest)));
+        // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is("TestProperty")));
     }
 
     @Test
+    @DisplayName("Should delete property")
     void PropertyController_DeleteProperty_ReturnStatusNoContent() throws Exception {
+        // Arrange
         doNothing().when(propertyService).deletePropertyById(anyLong());
-
+        //Act
         ResultActions resultActions = mockMvc.perform(delete("/api/property/1")
                 .contentType(MediaType.APPLICATION_JSON));
-
+        // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }

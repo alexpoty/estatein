@@ -34,8 +34,10 @@ public class PropertyServiceImpl implements PropertyService {
 
     public PropertyResponse createProperty(PropertyRequest propertyRequest) {
         log.info("Checking if property exists or not");
-        if (propertyRepository.existsById(propertyRequest.id()))
-            throw new PropertyAlreadyExistsException("Property with id " + propertyRequest.id() + " already exists");
+        if (propertyRequest.id() != null) {
+            if (propertyRepository.existsById(propertyRequest.id()))
+                throw new PropertyAlreadyExistsException("Property with id " + propertyRequest.id() + " already exists");
+        }
         log.info("Starting to create property");
         return PropertyMapper.convertToResponse(propertyRepository
                 .save(PropertyMapper.convertToModel(propertyRequest)));
@@ -57,5 +59,4 @@ public class PropertyServiceImpl implements PropertyService {
         log.info("Deleting property");
         propertyRepository.deleteById(id);
     }
-
 }

@@ -4,7 +4,9 @@ import com.alexpoty.estatein.property.dto.PropertyRequest;
 import com.alexpoty.estatein.property.dto.PropertyResponse;
 import com.alexpoty.estatein.property.exception.PropertyNotFoundException;
 import com.alexpoty.estatein.property.model.Property;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class PropertyMapper {
 
     public static Property convertToModel(PropertyRequest propertyRequest) {
