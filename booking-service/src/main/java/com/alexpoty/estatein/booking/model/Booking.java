@@ -21,6 +21,6 @@ public class Booking {
     private String phone;
     private String name;
     private String surname;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Property property;
+    @Column(name = "property_id")
+    private Long propertyId;
 }
