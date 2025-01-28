@@ -2,7 +2,7 @@ name: Application Test
 
 on:
   pull_request:
-    branches: ["develop"]
+    branches: ["develop", "master"]
 jobs:
   build:
     runs-on: ubuntu-latest
