@@ -1,8 +1,8 @@
 name: Application Test
 
 on:
-  push:
-    branches: ["feature/github-ci-cd"]
+  pull_request:
+    branches: ["develop"]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,6 +12,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
+
       - uses: actions/checkout@v4
       - name: Set up Jdk
         uses: actions/setup-java@v4
@@ -19,5 +20,5 @@ jobs:
           distribution: 'temurin'
           java-version: 21
           cache: 'maven'
-      - name: Build with Maven
+      - name: Test with Maven
         run: mvn -B test
