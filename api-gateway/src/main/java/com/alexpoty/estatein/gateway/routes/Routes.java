@@ -21,6 +21,8 @@ public class Routes {
 
     @Value("${property.service.url}")
     private String propertyServiceUrl;
+    @Value("${booking.service.url}")
+    private String bookingServiceUrl;
 
     @Bean
     public RouterFunction<ServerResponse> propertyServiceRoute() {
@@ -39,6 +41,15 @@ public class Routes {
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("propertyServiceSwaggerCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .filter(setPath("/api-docs"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> bookingServiceRoute() {
+        return route("booking_service")
+                .route(RequestPredicates.path("/api/booking"), HandlerFunctions.http(bookingServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("bookingServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
                 .build();
     }
 
