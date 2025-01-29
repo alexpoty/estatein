@@ -17,10 +17,9 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime dateTime;
+    private LocalDateTime date;
     private String phone;
     private String name;
     private String surname;
-    @Column(name = "property_id")
     private Long propertyId;
 }
