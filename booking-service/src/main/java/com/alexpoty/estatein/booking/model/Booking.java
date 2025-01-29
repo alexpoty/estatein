@@ -3,7 +3,7 @@ package com.alexpoty.estatein.booking.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_bookings")
@@ -17,7 +17,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date dateTime;
+    private LocalDateTime dateTime;
     private String phone;
     private String name;
     private String surname;

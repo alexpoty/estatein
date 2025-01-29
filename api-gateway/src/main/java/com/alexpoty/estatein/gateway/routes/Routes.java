@@ -30,6 +30,9 @@ public class Routes {
                 .route(RequestPredicates.path("/api/property"), HandlerFunctions.http(propertyServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("propertyServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
+                .route(RequestPredicates.path("/api/property/{id}"), HandlerFunctions.http(propertyServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("propertyServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
                 .build();
     }
 
@@ -48,6 +51,9 @@ public class Routes {
     public RouterFunction<ServerResponse> bookingServiceRoute() {
         return route("booking_service")
                 .route(RequestPredicates.path("/api/booking"), HandlerFunctions.http(bookingServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("bookingServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
+                .route(RequestPredicates.path("/api/booking/{id}"), HandlerFunctions.http(bookingServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("bookingServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();
