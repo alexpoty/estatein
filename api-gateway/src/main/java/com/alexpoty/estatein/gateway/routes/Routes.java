@@ -60,6 +60,17 @@ public class Routes {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> bookingServiceSwaggerRoute() {
+        return GatewayRouterFunctions.route("booking_service_swagger")
+                .route(RequestPredicates.path("/aggregate/booking-service/v3/api-docs"),
+                        HandlerFunctions.http(bookingServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("bookingServiceSwaggerCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
+                .filter(setPath("/api-docs"))
+                .build();
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> fallbackRoute() {
         return route("fallbackRoute")
                 .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)
