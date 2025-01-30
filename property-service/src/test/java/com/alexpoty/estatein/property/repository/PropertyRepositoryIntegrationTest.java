@@ -24,8 +24,6 @@ class PropertyRepositoryIntegrationTest {
 
     @Autowired
     private PropertyRepository propertyRepository;
-    @Autowired
-    private Flyway flyway;
 
     private Property property;
 
@@ -35,12 +33,12 @@ class PropertyRepositoryIntegrationTest {
     }
 
     @AfterAll
-    static void AfterAll() {
+    static void afterAll() {
         container.stop();
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp(@Autowired Flyway flyway) {
         property = Property.builder()
                 .title("Test Property")
                 .location("Test Address")
