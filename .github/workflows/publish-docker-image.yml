@@ -1,9 +1,11 @@
 name: Publish Docker Image
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - "feature/publish-docker-image"
+      - "master"
 jobs:
   build:
     runs-on: ubuntu-latest
