@@ -13,8 +13,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
+
       - uses: actions/checkout@v4
-      - name: Set up Jdf
+      - name: Set up Jdk
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
