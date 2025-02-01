@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
 
     steps:
 
@@ -16,8 +19,8 @@ jobs:
           username: alexpoty
           password: ${{secrets.DOCKER_TOKEN}}
       - name: Build docker image
-        working-directory: /frontend
-        run: |
-          docker build -t estatein-frontend
-          docker tag estatein-frontend:latest alexpoty/estatein-frontend:latest
-          docker push alexpoty/estatein-frontend:latest
+        uses: docker/build-push-action@v5
+        with:
+          context:
+          push: true
+          tags: alexpoty/estatein-frontend:latest
