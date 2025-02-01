@@ -1,0 +1,19 @@
+name: Build and publish frontend
+
+on:
+  push:
+    branches:
+      - "feature/set-up/frontend"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Build docker image
+        run: |
+          CD ./frontend
+          docker login --username alexpoty --password ${{secrets.DOCKER_TOKEN}}
+          docker build -t estatein-frontend
+          docker tag estatein-frontend:latest alexpoty/estatein-frontend:latest
+          docker push alexpoty/estatein-frontend:latest
