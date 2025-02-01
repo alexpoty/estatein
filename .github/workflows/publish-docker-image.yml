@@ -22,4 +22,5 @@ jobs:
           java-version: 21
           cache: 'maven'
       - name: Build Docker image
+        uses: actions/checkout@v4
         run: mvn spring-boot:build-image -DdockerPassword=${{ secrets.DOCKER_TOKEN }}

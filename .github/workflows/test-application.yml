@@ -21,5 +21,4 @@ jobs:
           java-version: 21
           cache: 'maven'
       - name: Test with Maven
-        uses: actions/checkout@v4
         run: mvn -B test
