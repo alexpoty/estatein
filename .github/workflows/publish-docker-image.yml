@@ -1,14 +1,16 @@
-name: Application Test
+name: Publish Docker Image
 
 on:
   pull_request:
-    branches: ["develop", "master"]
+    types:
+      - closed
+    branches:
+      - "master"
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-
       - uses: actions/checkout@v4
 
       - name: Set up Jdk
@@ -17,5 +19,5 @@ jobs:
           distribution: 'temurin'
           java-version: 21
           cache: 'maven'
-      - name: Test with Maven
-        run: mvn -B test -DdockerPassword=${{ secrets.DOCKER_TOKEN }}
+      - name: Build Docker image
+        run: mvn spring-boot:build-image -DdockerPassword=${{ secrets.DOCKER_TOKEN }}
