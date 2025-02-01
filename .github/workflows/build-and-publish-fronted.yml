@@ -3,7 +3,7 @@ name: Build and publish frontend
 on:
   push:
     branches:
-      - "feature/set-up/frontend"
+      - "feature/set-up-frontend"
 jobs:
   build:
     runs-on: ubuntu-latest
