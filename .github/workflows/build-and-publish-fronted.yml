@@ -10,6 +10,7 @@ jobs:
 
     steps:
       - name: Build docker image
+        uses: actions/checkout@v4
         run: |
           CD ./frontend
           docker login --username alexpoty --password ${{secrets.DOCKER_TOKEN}}
