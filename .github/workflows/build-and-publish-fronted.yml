@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-        name: Build docker image
+      - name: Build docker image
         run: |
           CD ./frontend
           docker login --username alexpoty --password ${{secrets.DOCKER_TOKEN}}
