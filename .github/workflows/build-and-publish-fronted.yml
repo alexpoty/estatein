@@ -1,9 +1,11 @@
 name: Build and publish frontend
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - "feature/set-up-frontend"
+      - "master"
 jobs:
   publish-image:
     runs-on: ubuntu-latest
