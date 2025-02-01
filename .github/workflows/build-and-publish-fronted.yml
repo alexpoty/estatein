@@ -5,22 +5,16 @@ on:
     branches:
       - "feature/set-up-frontend"
 jobs:
-  build:
+  publish-image:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
-
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Build Image
+        run: docker build ./frontend/ -t alexpoty/estatein-frontend
+      - name: Push Image
+        run: |
+          docker login -u alexpoty -p ${{secrets.DOCKER_TOKEN}}
+          docker push alexpoty/estatein-frontend
+          
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: alexpoty
-          password: ${{secrets.DOCKER_TOKEN}}
-      - name: Build docker image
-        uses: docker/build-push-action@v5
-        with:
-          context:
-          push: true
-          tags: alexpoty/estatein-frontend:latest
