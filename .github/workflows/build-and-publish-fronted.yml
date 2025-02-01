@@ -16,9 +16,8 @@ jobs:
           username: alexpoty
           password: ${{secrets.DOCKER_TOKEN}}
       - name: Build docker image
-        working-directory: ./frontend
+        working-directory: /frontend
         run: |
-          docker login --username alexpoty --password ${{secrets.DOCKER_TOKEN}}
           docker build -t estatein-frontend
           docker tag estatein-frontend:latest alexpoty/estatein-frontend:latest
           docker push alexpoty/estatein-frontend:latest
