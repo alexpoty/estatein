@@ -34,6 +34,7 @@
                 <configuration>
                     <image>
                         <name>alexpoty/${project.artifactId}</name>
+                        <publish>true</publish>
                     </image>
                     <docker>
                         <publishRegistry>
