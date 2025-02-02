@@ -1,22 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @use "sass:math" as math;
-@import "null";
+@import "base-scss/mixins";
+@import "base-scss/null";
 // Font Imports
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-// To rem
-@function toRem($px, $current: 16) {
-  $result: math.div($px, $current) + rem;
-  @return $result;
-}
-// EM
-@function em($px, $current:16) {
-  $result: calc($px / $current) + em;
-  @return $result;
-}
-
+//// Mixins
+//@function toRem($px, $current: 16) {
+//  $result: math.div($px, $current) + rem;
+//  @return $result;
+//}
+//// EM
+//@function em($px, $current:16) {
+//  $result: calc($px / $current) + em;
+//  @return $result;
+//}
 // Variables
-$maxWidthContainer: 1300;
+$maxWidthContainer: 1600;
 $containerPadding: 30;
+$max-width: 1600;
 $containerWidth: $maxWidthContainer + $containerPadding;
 //Colors
 $background: #141414;
@@ -51,7 +52,7 @@ body {
 
 [class*="__container"] {
   margin: 0 auto;
-  max-width: toRem(1200);
+  max-width: toRem($max-width);
   padding: 0 toRem(math.div(30, 2));
 
   @media (max-width: $pc) {

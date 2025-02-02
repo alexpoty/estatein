@@ -1,19 +1,96 @@
+@import "../../../base-scss/mixins";
+@import "../../../base-scss/variables";
+
 .header {
+  padding-top: toRem(22);
+  padding-bottom: toRem(22);
+  background-color: #1A1A1A;
+  border-top: #262626 1px solid;
+  border-bottom: #262626 1px solid;
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: toRem(455);
+    text-align: center;
+    @media (max-width: $pc) {
+      column-gap: toRem(80);
+
+    }
+    @media (max-width: $tablet) {
+      column-gap: toRem(20);
+    }
+  }
+
   &__image {
 
   }
-  &__menu {}
-  &__list {}
+
+  &__menu {
+  }
+
+  &__list {
+  }
+
   &__button {
-    button {}
+    button {
+      color: white;
+      background-color: #141414;
+      padding: 16px 24px 16px 24px;
+      border-style: solid;
+      border-color: #262626;
+      border-width: 1px;
+      border-radius: toRem(10);
+
+      &:hover {
+        background-color: #703BF7;
+      }
+
+      transition: all 0.5s ease;
+    }
   }
 }
 
 .menu {
-  &__list {}
+  display: flex;
 
+  &__list {
+    display: flex;
+    gap: toRem(30);
+  }
+
+  button {
+    display: none;
+    color: white;
+    background-color: #141414;
+    padding: 16px 24px 16px 24px;
+    border-style: solid;
+    border-color: #262626;
+    border-width: 1px;
+    border-radius: toRem(10);
+
+    &:hover {
+      background-color: #703BF7;
+    }
+
+    transition: all 0.5s ease;
+    @media (max-width: $mobile) {
+      display: flex;
+    }
+  }
 }
 
 .list {
-  &__item {}
+  &__item {
+    font-family: "Urbanist", serif;
+    line-height: 150%;
+    font-weight: 500;
+
+    a:hover {
+      color: #703BF7;
+      transition: color 0.5s ease;
+    }
+  }
 }
