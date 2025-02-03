@@ -1,74 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
-@use "sass:math" as math;
-@import "base-scss/mixins";
-@import "base-scss/null";
-// Font Imports
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-//// Mixins
-//@function toRem($px, $current: 16) {
-//  $result: math.div($px, $current) + rem;
-//  @return $result;
-//}
-//// EM
-//@function em($px, $current:16) {
-//  $result: calc($px / $current) + em;
-//  @return $result;
-//}
-// Variables
-$maxWidthContainer: 1600;
-$containerPadding: 30;
-$max-width: 1600;
-$containerWidth: $maxWidthContainer + $containerPadding;
-//Colors
-$background: #141414;
-$grey: #1A1A1A;
-// Break Points
-$pc: em($containerWidth);
-$tablet: em(991.98);
-$mobile: em(767.98);
+// Reset Scss
+@import "reset";
+//Font
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100..900&display=swap');
 
 
 body {
-  font-size: toRem(18);
-  background-color: $background;
-  color: white;
-  font-family: "Urbanist", serif;
+  background-color: #141414;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 18px;
   font-weight: 500;
+  line-height: 1.5;
 }
 
-.wrapper {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  @supports (overflow: clip) {
-    overflow: clip;
-  }
-
-  > main {
-    flex: 1 1 auto;
-  }
-}
-
-[class*="__container"] {
+.container {
+  width: 1600px;
   margin: 0 auto;
-  max-width: toRem($max-width);
-  padding: 0 toRem(math.div(30, 2));
-
-  @media (max-width: $pc) {
-    max-width: toRem(970);
-  }
-  @media (max-width: $tablet) {
-    max-width: toRem(750);
-  }
-  @media (max-width: em($mobile)) {
-    max-width: none;
-    @if($containerPadding>0 and $maxWidthContainer>0) {
-      padding: 0 toRem(math.div($containerPadding, 2));
-    }
+  padding-left: 15px;
+  padding-right: 15px;
+  @media (max-width: 1599px) {
+    width: 100%;
   }
 }
-
-
-
 
