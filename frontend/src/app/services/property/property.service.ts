@@ -12,10 +12,10 @@ export class PropertyService {
   }
 
   getProperties(): Observable<Array<Property>> {
-    return this.http.get<Array<Property>>('http://localhost:9000/api/');
+    return this.http.get<Array<Property>>('http://localhost:9000/api/property');
   }
 
-  getPropertyById(id: number): Observable<Property> {
-    return this.http.get<Property>('http://localhost:9000/api/' + id);
+  getPropertyById(id: number | undefined): Observable<Property> {
+    return this.http.get<Property>('http://localhost:9000/api/property/' + id);
   }
 }
