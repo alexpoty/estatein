@@ -6,13 +6,13 @@
     <nav class="header__nav nav">
       <ul class="nav__list">
         <li class="nav__item">
-          <a href="#">Home</a>
+          <a routerLink="">Home</a>
         </li>
         <li class="nav__item">
           <a href="#">About Us</a>
         </li>
         <li class="nav__item">
-          <a href="#">Properties</a>
+          <a routerLink="properties">Properties</a>
         </li>
         <li class="nav__item">
           <a href="#">Services</a>
@@ -22,5 +22,23 @@
     <div class="header__button">
       <button>Contact Us</button>
     </div>
+    <app-burger-menu [isActive]="this.isActive" class="header__burger" (click)="onClick()"/>
   </div>
 </header>
+<div class="mobile" [ngClass]="isActive ? '' : 'header__mobile'">
+  <ul class="mobile__nav">
+    <li class="mobile__item">
+      <a routerLink="" (click)="onClick()">Home</a>
+    </li>
+    <li class="mobile__item">
+      <a routerLink="about-us" (click)="onClick()">About Us</a>
+    </li>
+    <li class="mobile__item">
+      <a routerLink="properties" (click)="onClick()">Properties</a>
+    </li>
+    <li class="mobile__item">
+      <a routerLink="services" (click)="onClick()">Services</a>
+    </li>
+  </ul>
+  <button>Contact Us</button>
+</div>
