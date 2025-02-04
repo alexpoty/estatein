@@ -2,11 +2,14 @@ import {Component, inject, OnInit} from '@angular/core';
 import {PropertyService} from '../../services/property/property.service';
 import {Property} from '../../model/property';
 import {Router} from '@angular/router';
+import {PropertyCardComponent} from '../../shared/property-card/property-card.component';
 
 @Component({
   selector: 'app-properties-page',
   standalone: true,
-  imports: [],
+  imports: [
+    PropertyCardComponent
+  ],
   templateUrl: './properties-page.component.html',
   styleUrl: './properties-page.component.scss'
 })
