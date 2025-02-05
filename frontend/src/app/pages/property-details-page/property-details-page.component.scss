@@ -1,0 +1,113 @@
+.page__property-details {
+}
+
+.property-details {
+  padding-top: 120px;
+  color: white;
+  &__container {
+    padding-top: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+    }
+    span {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 10px 10px;
+      border: 1px solid #262626;
+      gap: 6px;
+      border-radius: 10px;
+      justify-content: center;
+      img {
+        line-height: 1.5;
+      }
+    }
+  }
+
+  &__price {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    gap: 2px;
+    font-size: 24px;
+    font-weight: 600;
+    span {
+      color: #999999;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
+
+.property-slider {
+  padding-top: 50px;
+
+  &__container {
+    padding: 150px 50px;
+    background-color: #262626;
+    border-radius: 10px;
+  }
+  &__images {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    img {
+      border-radius: 10px;
+      gap: 30px;
+    }
+  }
+}
+
+.description {
+  padding-top: 50px;
+  color: white;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    text-align: center;
+    padding: 50px 50px;
+    border: 1px solid #262626;
+    border-radius: 50px;
+
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  p {
+    color: #999999;
+  }
+  &__area {
+    display: flex;
+    flex-direction: column;
+    span {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: white;
+    }
+    color: #999999;
+  }
+}
+
+.property-form {
+  padding-top: 150px;
+  &__container {
+
+  }
+}

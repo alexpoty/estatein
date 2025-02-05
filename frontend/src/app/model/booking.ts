@@ -4,5 +4,5 @@ export interface Booking {
   phone: string;
   name: string;
   surname: string;
-  propertyId: number;
+  propertyId?: number;
 }
