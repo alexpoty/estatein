@@ -25,7 +25,7 @@ export class PropertyDetailsPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder) {
     this.createBookingForm = this.fb.group({
-      date: [new Date()],
+      date: [new Date().toISOString().split('T')[0]],
       phone: [''],
       name: [''],
       surname: ['']
@@ -60,6 +60,7 @@ export class PropertyDetailsPageComponent implements OnInit {
       })
     } else {
       console.log("This Form is not Valid")
+      this.createBookingForm.reset();
     }
   }
 

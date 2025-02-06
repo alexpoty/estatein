@@ -107,7 +107,117 @@
 
 .property-form {
   padding-top: 150px;
+  padding-bottom: 150px;
   &__container {
+    display: flex;
+    justify-content: space-between;
 
+  }
+  &__inquire {
+    h2 {
+      font-size: 48px;
+      color: white;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    p {
+      color: #999999;
+      max-width: 519px;
+    }
+  }
+  &__form {
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 20px;
+      column-gap: 80px;
+      border: 1px solid #262626;
+      padding: 60px 60px;
+      border-radius: 10px;
+    }
+    button {
+      color: white;
+      padding: 18px 46px;
+      background-color: #703BF7;
+      border-radius: 15px;
+      align-self: flex-end;
+    }
+  }
+  &__name {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 16px;
+    }
+    input {
+      background-color: #1A1A1A;
+      padding: 24px 20px;
+      color: white;
+    }
+  }
+  &__surname {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 16px;
+    }
+    input {
+      background-color: #1A1A1A;
+      padding: 24px 20px;
+      color: white;
+    }
+  }
+  &__phone {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 16px;
+    }
+    input {
+      background-color: #1A1A1A;
+      padding: 24px 20px;
+      color: white;
+    }
+  }
+  &__date {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 16px;
+    }
+    input {
+      background-color: #1A1A1A;
+      padding: 24px 20px;
+      color: white;
+    }
+  }
+  &__picked-property {
+    display: flex;
+    flex-direction: column;
+    span {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 16px;
+    }
+    h3 {
+      background-color: #1A1A1A;
+      padding: 24px 20px;
+      color: white;
+      border-radius: 13px;
+    }
   }
 }
