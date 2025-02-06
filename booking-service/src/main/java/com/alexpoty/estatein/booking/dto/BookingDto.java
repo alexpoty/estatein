@@ -1,10 +1,10 @@
 package com.alexpoty.estatein.booking.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record BookingDto(
         Long id,
-        LocalDateTime date,
+        LocalDate date,
         String phone,
         String name,
         String surname,

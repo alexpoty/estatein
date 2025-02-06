@@ -1,8 +1,8 @@
 export interface Booking {
   id?: number;
-  date: Date;
+  date: string;
   phone: string;
   name: string;
   surname: string;
-  propertyId: number;
+  propertyId?: number;
 }
