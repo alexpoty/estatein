@@ -1,0 +1,24 @@
+// Reset Scss
+@import "reset";
+//Font
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100..900&display=swap');
+
+
+body {
+  background-color: #141414;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.container {
+  width: 1600px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  @media (max-width: 1599px) {
+    width: 100%;
+  }
+}
+

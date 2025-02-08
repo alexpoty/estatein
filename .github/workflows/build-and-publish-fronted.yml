@@ -1,0 +1,22 @@
+name: Build and publish frontend
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - "master"
+jobs:
+  publish-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Build Image
+        run: docker build ./frontend/ -t alexpoty/estatein-frontend
+      - name: Push Image
+        run: |
+          docker login -u alexpoty -p ${{secrets.DOCKER_TOKEN}}
+          docker push alexpoty/estatein-frontend
+          
+

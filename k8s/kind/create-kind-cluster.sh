@@ -1,0 +1,1 @@
+kind create cluster --name estatein --config kind-config.yaml

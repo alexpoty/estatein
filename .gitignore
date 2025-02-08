@@ -37,3 +37,9 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
+/mysql/
+/volume-data/
+/data/
+/docker/tempo/tempo-data/
+
+.qodo

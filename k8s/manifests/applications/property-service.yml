@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: property-service
+  name: property-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: property-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: property-service
+    spec:
+      containers:
+        - image: alexpoty/estatein-property-service
+          name: estatein-property-service
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_DATASOURCE_URL
+                  name: property-service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: property-service
+  name: property-service
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: property-service
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: property-service-config
+data:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.default.svc.cluster.local:3306/property_service"
+

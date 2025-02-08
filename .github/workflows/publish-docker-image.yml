@@ -1,0 +1,23 @@
+name: Publish Docker Image
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - "master"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+          cache: 'maven'
+      - name: Build Docker image
+        run: mvn spring-boot:build-image -DdockerPassword=${{ secrets.DOCKER_TOKEN }}
