@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-config
+data:
+  PROPERTY_SERVICE_URL: "http://property-service.default.svc.cluster.local:8080"
+  BOOKING_SERVICE_URL: "http://booking-service.default.svc.cluster.local:8081"
