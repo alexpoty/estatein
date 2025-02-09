@@ -24,6 +24,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/property").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/property/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/booking").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/image").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/image/*").permitAll()
                         .anyRequest().authenticated())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

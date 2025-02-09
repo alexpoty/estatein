@@ -15,7 +15,7 @@ spec:
         app: api-gateway
     spec:
       containers:
-        - image: alexpoty/estatein-api-gateway
+        - image: alexpoty/estatein-api-gateway:latest
           name: estatein-api-gateway
           ports:
             - containerPort: 9000
