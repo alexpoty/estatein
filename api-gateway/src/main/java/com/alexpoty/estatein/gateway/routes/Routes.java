@@ -23,6 +23,8 @@ public class Routes {
     private String propertyServiceUrl;
     @Value("${booking.service.url}")
     private String bookingServiceUrl;
+    @Value("${image.service.url}")
+    private String imageServiceUrl;
 
     @Bean
     public RouterFunction<ServerResponse> propertyServiceRoute() {
@@ -71,10 +73,35 @@ public class Routes {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> imageServiceRoute() {
+        return route("image_service")
+                .route(RequestPredicates.path("/api/image"), HandlerFunctions.http(imageServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("imageServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
+                .route(RequestPredicates.path("/api/image/{id}"), HandlerFunctions.http(imageServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("imageServiceCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> imageServiceSwaggerRoute() {
+        return route("image_service_swagger")
+                .route(RequestPredicates.path("/aggregate/image-service/v3/api-docs"),
+                        HandlerFunctions.http(imageServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("imageServiceSwaggerCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
+                .filter(setPath("/api-docs"))
+                .build();
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> fallbackRoute() {
         return route("fallbackRoute")
                 .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)
                         .body("Sorry, this service is unavailable at the moment"))
                 .build();
     }
+
+
 }

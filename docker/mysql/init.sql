@@ -1,2 +1,3 @@
 CREATE DATABASE IF NOT EXISTS property_service;
 CREATE DATABASE IF NOT EXISTS booking_service;
+CREATE DATABASE IF NOT EXISTS image_service;

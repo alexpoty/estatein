@@ -16,7 +16,7 @@ spec:
         app: property-service
     spec:
       containers:
-        - image: alexpoty/estatein-property-service
+        - image: alexpoty/estatein-property-service:latest
           name: estatein-property-service
           ports:
             - containerPort: 8080

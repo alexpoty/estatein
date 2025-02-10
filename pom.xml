@@ -17,6 +17,7 @@
         <module>property-service</module>
         <module>api-gateway</module>
         <module>booking-service</module>
+        <module>image-service</module>
     </modules>
 
     <properties>

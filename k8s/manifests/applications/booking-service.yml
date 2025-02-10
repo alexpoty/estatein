@@ -15,7 +15,7 @@ spec:
         app: booking-service
     spec:
       containers:
-        - image: alexpoty/estatein-booking-service
+        - image: alexpoty/estatein-booking-service:latest
           name: estatein-booking-service
           ports:
             - containerPort: 8081
