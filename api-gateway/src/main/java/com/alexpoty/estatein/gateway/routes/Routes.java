@@ -85,6 +85,17 @@ public class Routes {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> imageServiceSwaggerRoute() {
+        return route("image_service_swagger")
+                .route(RequestPredicates.path("/aggregate/image-service/v3/api-docs"),
+                        HandlerFunctions.http(imageServiceUrl))
+                .filter(CircuitBreakerFilterFunctions.circuitBreaker("imageServiceSwaggerCircuitBreaker",
+                        URI.create("forward:/fallbackRoute")))
+                .filter(setPath("/api-docs"))
+                .build();
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> fallbackRoute() {
         return route("fallbackRoute")
                 .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)

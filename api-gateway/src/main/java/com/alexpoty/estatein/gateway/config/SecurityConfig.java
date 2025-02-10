@@ -16,6 +16,9 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+    private final String[] permittedResources = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+            "/swagger-resources/**", "/api-docs/**", "/aggregate/**"};
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -26,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/booking").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/image").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/image/*").permitAll()
+                        .requestMatchers(permittedResources).permitAll()
                         .anyRequest().authenticated())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
