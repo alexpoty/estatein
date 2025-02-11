@@ -1,5 +1,7 @@
 package com.alexpoty.estatein.booking;
 
+import com.alexpoty.estatein.booking.configuration.KafkaTestConfig;
+import com.alexpoty.estatein.booking.event.BookingPlacedEvent;
 import com.alexpoty.estatein.booking.model.Booking;
 import com.alexpoty.estatein.booking.repository.BookingRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,11 +17,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.testcontainers.containers.MySQLContainer;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = "spring.flyway.clean-disabled=false"
+        properties = "spring.flyway.clean-disabled=false",
+        classes = {KafkaTestConfig.class}
 )
 class BookingServiceApplicationIntegrationTest {
 
@@ -35,6 +44,8 @@ class BookingServiceApplicationIntegrationTest {
     BookingRepository bookingRepository;
     @Autowired
     ObjectMapper objectMapper;
+    @Autowired
+    private KafkaTemplate<String, BookingPlacedEvent> kafkaTemplate;
 
     @BeforeAll
     static void beforeAll() {
@@ -96,6 +107,7 @@ class BookingServiceApplicationIntegrationTest {
                 .then()
                 .statusCode(201)
                 .body("phone", Matchers.is("test"));
+        verify(kafkaTemplate, times(1)).send(anyString(), any(BookingPlacedEvent.class));
     }
 
     @Test

@@ -1,12 +1,14 @@
 package com.alexpoty.estatein.booking.service;
 
 import com.alexpoty.estatein.booking.dto.BookingDto;
+import com.alexpoty.estatein.booking.event.BookingPlacedEvent;
 import com.alexpoty.estatein.booking.exceptions.BookingNotFoundException;
 import com.alexpoty.estatein.booking.model.Booking;
 import com.alexpoty.estatein.booking.repository.BookingRepository;
 import com.alexpoty.estatein.booking.util.BookingMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final KafkaTemplate<String, BookingPlacedEvent> kafkaTemplate;
 
     @Override
     public List<BookingDto> getAllBookings() {
@@ -35,6 +38,17 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingDto createBooking(BookingDto bookingDto) {
        log.info("Starting to create booking {}", bookingDto);
+       // Send mail
+        BookingPlacedEvent bookingPlacedEvent = new BookingPlacedEvent();
+        bookingPlacedEvent.setDate(bookingDto.date());
+        bookingPlacedEvent.setEmail(bookingDto.email());
+        bookingPlacedEvent.setName(bookingDto.name());
+        bookingPlacedEvent.setPropertyId(bookingDto.propertyId());
+
+
+        log.info("Start - sending kafka topic to notification service with {}", bookingPlacedEvent);
+        kafkaTemplate.send("booking-placed", bookingPlacedEvent);
+        log.info("Send - kafka topic to notification service with {}", bookingPlacedEvent);
        return BookingMapper.convertToDto(bookingRepository.save(BookingMapper.convertToModel(bookingDto)));
     }
 

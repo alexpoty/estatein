@@ -1,0 +1,1 @@
+AlTER TABLE `t_bookings` ADD `email` VARCHAR(255) after `date`

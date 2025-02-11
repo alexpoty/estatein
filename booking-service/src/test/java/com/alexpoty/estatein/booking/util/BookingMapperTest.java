@@ -29,6 +29,7 @@ class BookingMapperTest {
                 1L,
                 null,
                 "test",
+                "7777777",
                 "test",
                 "test",
                 1L
