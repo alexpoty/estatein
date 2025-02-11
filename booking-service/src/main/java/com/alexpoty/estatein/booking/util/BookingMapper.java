@@ -9,6 +9,7 @@ public class BookingMapper {
         return Booking.builder()
                 .id(bookingDto.id())
                 .date(bookingDto.date())
+                .email(bookingDto.email())
                 .phone(bookingDto.phone())
                 .name(bookingDto.name())
                 .surname(bookingDto.surname())
@@ -20,6 +21,7 @@ public class BookingMapper {
         return new BookingDto(
                 booking.getId(),
                 booking.getDate(),
+                booking.getEmail(),
                 booking.getPhone(),
                 booking.getName(),
                 booking.getSurname(),

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public record BookingDto(
         Long id,
         LocalDate date,
+        String email,
         String phone,
         String name,
         String surname,
