@@ -18,4 +18,6 @@ jobs:
           java-version: 21
           cache: 'maven'
       - name: Test with Maven
+        env:
+          CLOUDINARY_URL: ${{secrets.CLOUDINARY_URL}}
         run: mvn -B test

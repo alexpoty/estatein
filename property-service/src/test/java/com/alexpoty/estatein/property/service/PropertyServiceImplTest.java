@@ -14,6 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -68,6 +71,19 @@ class PropertyServiceImplTest {
         assertThat(testProperty.get(0)).isEqualTo(new PropertyResponse(1L, "TestProperty",
                 "TestDescription", "testLocation", new BigDecimal(1111), "Test area"));
         verify(propertyRepository, times(1)).findAll();
+    }
+
+    @Test
+    void shouldReturnPageOfProperties() {
+        // Arrange
+        Page<Property> page = new PageImpl<>(properties);
+        when(propertyRepository.findAll(any(Pageable.class))).thenReturn(page);
+        // Act
+        Page<PropertyResponse> actual = propertyService.getPageOfProperties(0,1);
+        // Assert
+        assertThat(actual.getTotalElements()).isEqualTo(1);
+        assertThat(actual.getTotalPages()).isEqualTo(1);
+        verify(propertyRepository, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

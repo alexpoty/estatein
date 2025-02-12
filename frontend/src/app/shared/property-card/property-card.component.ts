@@ -1,6 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
-import {Property} from '../../model/property';
-import {Router} from '@angular/router';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-property-card',
@@ -10,11 +8,4 @@ import {Router} from '@angular/router';
   styleUrl: './property-card.component.scss'
 })
 export class PropertyCardComponent {
-
-  private readonly router: Router = inject(Router);
-  @Input({required: true}) property!: Property;
-
-   async onClick(): Promise<void> {
-     await this.router.navigate(['property', this.property.id]);
-  }
 }

@@ -2,7 +2,9 @@ package com.alexpoty.estatein.image.service;
 
 import com.alexpoty.estatein.image.dto.ImageRequest;
 import com.alexpoty.estatein.image.dto.ImageResponse;
+import com.alexpoty.estatein.image.dto.ImageUploadDto;
 import com.alexpoty.estatein.image.exception.ImageNotFoundException;
+import com.alexpoty.estatein.image.model.Image;
 import com.alexpoty.estatein.image.respository.ImageRepository;
 import com.alexpoty.estatein.image.utility.ImageMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ import java.util.List;
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
+    private final CloudinaryServiceImpl cloudinaryService;
 
     public List<ImageResponse> getAllImagesByPropertyId(Long propertyId) {
         log.info("Starting to findingAllImages By PropertyID {}", propertyId);
@@ -40,5 +44,21 @@ public class ImageServiceImpl implements ImageService {
         }
         log.info("Deleting image {}", id);
         imageRepository.deleteById(id);
+    }
+
+    public Map<?, ?> uploadImage(ImageUploadDto imageUploadDto) {
+        try {
+            if (imageUploadDto.file() == null) {
+                throw new ImageNotFoundException("File is empty");
+            }
+            Image image = new Image();
+            image.setPropertyId(imageUploadDto.propertyId());
+            image.setImageUrl(cloudinaryService.uploadFile(imageUploadDto.file()));
+            imageRepository.save(image);
+            return Map.of("url", image.getImageUrl());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 }

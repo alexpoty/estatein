@@ -30,9 +30,8 @@ public class Routes {
     public RouterFunction<ServerResponse> propertyServiceRoute() {
         return route("property_service")
                 .route(RequestPredicates.path("/api/property"), HandlerFunctions.http(propertyServiceUrl))
-                .filter(CircuitBreakerFilterFunctions.circuitBreaker("propertyServiceCircuitBreaker",
-                        URI.create("forward:/fallbackRoute")))
                 .route(RequestPredicates.path("/api/property/{id}"), HandlerFunctions.http(propertyServiceUrl))
+                .route(RequestPredicates.path("/api/property/page"), HandlerFunctions.http(propertyServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("propertyServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();
@@ -53,8 +52,6 @@ public class Routes {
     public RouterFunction<ServerResponse> bookingServiceRoute() {
         return route("booking_service")
                 .route(RequestPredicates.path("/api/booking"), HandlerFunctions.http(bookingServiceUrl))
-                .filter(CircuitBreakerFilterFunctions.circuitBreaker("bookingServiceCircuitBreaker",
-                        URI.create("forward:/fallbackRoute")))
                 .route(RequestPredicates.path("/api/booking/{id}"), HandlerFunctions.http(bookingServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("bookingServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
@@ -76,9 +73,8 @@ public class Routes {
     public RouterFunction<ServerResponse> imageServiceRoute() {
         return route("image_service")
                 .route(RequestPredicates.path("/api/image"), HandlerFunctions.http(imageServiceUrl))
-                .filter(CircuitBreakerFilterFunctions.circuitBreaker("imageServiceCircuitBreaker",
-                        URI.create("forward:/fallbackRoute")))
                 .route(RequestPredicates.path("/api/image/{id}"), HandlerFunctions.http(imageServiceUrl))
+                .route(RequestPredicates.path("/api/image/upload"), HandlerFunctions.http(imageServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("imageServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();
@@ -100,8 +96,8 @@ public class Routes {
         return route("fallbackRoute")
                 .GET("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)
                         .body("Sorry, this service is unavailable at the moment"))
+                .POST("/fallbackRoute", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE)
+                        .body("Sorry this service is unavailable at the moment"))
                 .build();
     }
-
-
 }
