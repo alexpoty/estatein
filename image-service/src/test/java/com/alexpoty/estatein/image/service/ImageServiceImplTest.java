@@ -2,6 +2,7 @@ package com.alexpoty.estatein.image.service;
 
 import com.alexpoty.estatein.image.dto.ImageRequest;
 import com.alexpoty.estatein.image.dto.ImageResponse;
+import com.alexpoty.estatein.image.dto.ImageUploadDto;
 import com.alexpoty.estatein.image.exception.ImageNotFoundException;
 import com.alexpoty.estatein.image.model.Image;
 import com.alexpoty.estatein.image.respository.ImageRepository;
@@ -11,10 +12,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -23,6 +28,8 @@ class ImageServiceImplTest {
 
     @Mock
     private ImageRepository imageRepository;
+    @Mock
+    private CloudinaryServiceImpl cloudinaryService;
     @InjectMocks
     private ImageServiceImpl imageService;
 
@@ -96,5 +103,22 @@ class ImageServiceImplTest {
         when(imageRepository.existsById(anyLong())).thenReturn(false);
         // Act and assert
         assertThrows(ImageNotFoundException.class, () -> imageService.deleteImageById(1L));
+    }
+
+    @Test
+    void shouldUploadImage() {
+        // Arrange
+        ImageUploadDto imageUploadDto = new ImageUploadDto(
+                new MockMultipartFile("file",
+                        "test.jpg","image/jpeg", "some-content".getBytes()),
+                1L
+        );
+        when(cloudinaryService.uploadFile(any(MultipartFile.class))).thenReturn("http://cloudinary.com/image_url");
+        when(imageRepository.save(any(Image.class))).thenReturn(image);
+        // Act
+        Map<?, ?> result = imageService.uploadImage(imageUploadDto);
+        // Assert
+        assertNotNull(result);
+        assertThat(result.get("url")).isEqualTo("http://cloudinary.com/image_url");
     }
 }

@@ -2,6 +2,8 @@ package com.alexpoty.estatein.image.controller;
 
 import com.alexpoty.estatein.image.dto.ImageRequest;
 import com.alexpoty.estatein.image.dto.ImageResponse;
+import com.alexpoty.estatein.image.dto.ImageUploadDto;
+import com.alexpoty.estatein.image.service.CloudinaryServiceImpl;
 import com.alexpoty.estatein.image.service.ImageServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
@@ -13,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,6 +40,9 @@ class ImageControllerTest {
 
     @MockitoBean
     private ImageServiceImpl imageService;
+
+    @MockitoBean
+    private CloudinaryServiceImpl cloudinaryService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -102,5 +109,22 @@ class ImageControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
         // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    void ImageController_UploadImage() throws Exception {
+        // Arrange
+        when(cloudinaryService.uploadFile(any(MultipartFile.class))).thenReturn("http://cloudinary.com/image_url");
+        ImageUploadDto imageUploadDto = new ImageUploadDto(
+                new MockMultipartFile("file",
+                        "test.jpg","image/jpeg", "some-content".getBytes()),
+                1L
+        );
+
+        // Act
+        mockMvc.perform(multipart("/api/image/upload")
+                .file((MockMultipartFile) imageUploadDto.file())
+                .param("propertyId", "1"))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 }

@@ -46,7 +46,6 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.deleteById(id);
     }
 
-    @Override
     public Map<?, ?> uploadImage(ImageUploadDto imageUploadDto) {
         try {
             if (imageUploadDto.file() == null) {
