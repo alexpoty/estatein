@@ -17,5 +17,8 @@ jobs:
           distribution: 'temurin'
           java-version: 21
           cache: 'maven'
+      - name: Set up env
+        env:
+          CLOUDINARY_URL: ${{secrets.CLOUDINARY_URL}}
       - name: Test with Maven
         run: mvn -B test
