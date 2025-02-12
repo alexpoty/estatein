@@ -31,6 +31,7 @@ public class Routes {
         return route("property_service")
                 .route(RequestPredicates.path("/api/property"), HandlerFunctions.http(propertyServiceUrl))
                 .route(RequestPredicates.path("/api/property/{id}"), HandlerFunctions.http(propertyServiceUrl))
+                .route(RequestPredicates.path("/api/property/page"), HandlerFunctions.http(propertyServiceUrl))
                 .filter(CircuitBreakerFilterFunctions.circuitBreaker("propertyServiceCircuitBreaker",
                         URI.create("forward:/fallbackRoute")))
                 .build();

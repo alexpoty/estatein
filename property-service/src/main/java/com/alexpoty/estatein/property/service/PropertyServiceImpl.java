@@ -9,6 +9,9 @@ import com.alexpoty.estatein.property.repository.PropertyRepository;
 import com.alexpoty.estatein.property.utility.PropertyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +26,12 @@ public class PropertyServiceImpl implements PropertyService {
     public List<PropertyResponse> getAllProperties() {
         log.info("Starting to retrieve all properties from db");
         return propertyRepository.findAll().stream().map(PropertyMapper::convertToResponse).toList();
+    }
+
+    public Page<PropertyResponse> getPageOfProperties(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        log.info("Starting to retrieve properties pages");
+        return propertyRepository.findAll(pageable).map(PropertyMapper::convertToResponse);
     }
 
     public PropertyResponse getProperty(Long id) {
