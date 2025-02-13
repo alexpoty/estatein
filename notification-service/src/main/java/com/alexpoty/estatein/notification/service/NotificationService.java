@@ -31,7 +31,7 @@ public class NotificationService {
                          We Glad to inform you that property that you booked on %s is accepted!
                          Our manager will contact you as soon as possible!
                          Best regards!
-                         Estate in!
+                         Estatein!
                         """, bookingPlacedEvent.getName(), bookingPlacedEvent.getDate()));
             } else {
                 messageHelper.setText(String.format("""
@@ -51,5 +51,4 @@ public class NotificationService {
             throw new RuntimeException("Exception occurred when sending mail!");
         }
     }
-
 }
