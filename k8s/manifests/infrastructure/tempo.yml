@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tempo
+  name: tempo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tempo
+  template:
+    metadata:
+      labels:
+        app: tempo
+    spec:
+      containers:
+        - image: grafana/tempo:2.2.2
+          name: tempo
+          ports:
+            - containerPort: 3110
+              name: Tempo
+            - containerPort: 9411
+              name: zipkin
+          args: [ "-config.file=/etc/tempo.yaml" ]
+          volumeMounts:
+            - mountPath: /tmp/tempo
+              name: tempo-data
+            - mountPath: /etc/tempo.yaml
+              subPath: tempo.yaml
+              name: tempo-config
+      volumes:
+        - name: tempo-data
+          persistentVolumeClaim:
+            claimName: tempo-pvc
+        - name: tempo-config
+          configMap:
+            name: tempo-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tempo
+  name: tempo
+spec:
+  ports:
+    - name: Tempo
+      port: 3110
+      protocol: TCP
+      targetPort: 3110
+    - name: zipkin
+      port: 9411
+      targetPort: 9411
+      protocol: TCP
+  selector:
+    app: tempo
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tempo-pv
+spec:
+  storageClassName: 'standard'
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/tempo
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tempo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tempo-config
+data:
+  tempo.yaml: |
+    server:
+      http_listen_port: 3200
+    
+    distributor:
+      receivers:
+        zipkin:
+    
+    storage:
+      trace:
+        backend: local
+        local:
+          path: /tmp/tempo/blocks

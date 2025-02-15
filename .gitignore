@@ -44,3 +44,4 @@ build/
 
 .qodo
 /image-service/src/main/resources/.env
+/notification-service/src/main/resources/.env
