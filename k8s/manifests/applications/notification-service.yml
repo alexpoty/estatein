@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: notification-service
+  name: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - image: alexpoty/estatein-notification-service:latest
+          name: estatein-notification-service
+          ports:
+            - containerPort: 8083
+          env:
+            - name: LOKI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: LOKI_URL
+                  name: common-config
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_KAFKA_BOOTSTRAP_SERVERS
+                  name: common-config
+            - name: SPRING_MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: spring_mail_username
+                  name: notification-service
+            - name: SPRING_MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: spring_mail_password
+                  name: notification-service
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: notification-service
+  name: notification-service
+spec:
+  ports:
+    - name: 8083-8083
+      port: 8083
+      protocol: TCP
+      targetPort: 8083
+  selector:
+    app: notification-service
+---
+apiVersion: v1
+data:
+  spring_mail_password: NWE2NWVkYjE0YWExYTA=
+  spring_mail_username: YjQyMTlkMGViMjk4YjU=
+kind: Secret
+metadata:
+  name: notification-service

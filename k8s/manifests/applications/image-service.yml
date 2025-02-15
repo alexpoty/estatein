@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: image-service
+  name: image-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-service
+  template:
+    metadata:
+      labels:
+        app: image-service
+    spec:
+      containers:
+        - image: alexpoty/estatein-image-service:latest
+          name: estatein-image-service
+          ports:
+            - containerPort: 8082
+          env:
+            - name: LOKI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: LOKI_URL
+                  name: common-config
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_DATASOURCE_URL
+                  name: image-service-config
+            - name: CLOUDINARY_URL
+              valueFrom:
+                secretKeyRef:
+                  key: cloudinary_url
+                  name: image-service-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: image-service
+  name: image-service
+spec:
+  ports:
+    - name: 8082-8082
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
+  selector:
+    app: image-service
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: image-service-config
+data:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.default.svc.cluster.local:3306/image_service"
+---
+apiVersion: v1
+data:
+  cloudinary_url: Y2xvdWRpbmFyeTovLzQyMTE4MTM4OTYyODk2ODo2SWhVYV9Mb0FGeDlXbnY3RXg5Rm44bFU1QlFAZHJrYWJlcHlp
+kind: Secret
+metadata:
+  name: image-service-secrets
