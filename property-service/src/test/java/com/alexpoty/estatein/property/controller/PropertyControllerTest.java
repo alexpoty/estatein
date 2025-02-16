@@ -13,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -64,6 +66,17 @@ class PropertyControllerTest {
         // Assert
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(1)));
+    }
+
+    @Test
+    void PropertyController_GetPageOfProperties() throws Exception {
+        // Arrange
+        Page<PropertyResponse> page = new PageImpl<>(propertyResponses);
+        when(propertyService.getPageOfProperties(anyInt(), anyInt())).thenReturn(page);
+        // Act
+        mockMvc.perform(get("/api/property/page")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

@@ -43,3 +43,5 @@ build/
 /docker/tempo/tempo-data/
 
 .qodo
+/image-service/src/main/resources/.env
+/notification-service/src/main/resources/.env

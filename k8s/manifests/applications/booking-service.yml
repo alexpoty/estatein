@@ -15,7 +15,7 @@ spec:
         app: booking-service
     spec:
       containers:
-        - image: alexpoty/estatein-booking-service
+        - image: alexpoty/estatein-booking-service:latest
           name: estatein-booking-service
           ports:
             - containerPort: 8081
@@ -25,6 +25,16 @@ spec:
                 configMapKeyRef:
                   key: SPRING_DATASOURCE_URL
                   name: booking-service-config
+            - name: LOKI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: LOKI_URL
+                  name: common-config
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  key: SPRING_KAFKA_BOOTSTRAP_SERVERS
+                  name: common-config
 ---
 apiVersion: v1
 kind: Service

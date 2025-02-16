@@ -44,6 +44,7 @@ class BookingControllerTest {
         bookingDto = new BookingDto(1L,
                 null,
                 "test",
+                "777777",
                 "test",
                 "test",
                 1L);

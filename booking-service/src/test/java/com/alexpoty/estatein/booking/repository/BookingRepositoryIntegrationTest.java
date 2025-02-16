@@ -43,6 +43,7 @@ class BookingRepositoryIntegrationTest {
     void setUp(@Autowired Flyway flyway) {
         booking = Booking.builder()
                 .phone("test")
+                .email("test@test.com")
                 .name("test")
                 .surname("test")
                 .propertyId(1L)

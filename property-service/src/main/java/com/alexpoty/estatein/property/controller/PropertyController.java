@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,16 @@ public class PropertyController {
     public ResponseEntity<List<PropertyResponse>> getAllProperties() {
         log.info("PropertyController::getAllProperties");
         return new ResponseEntity<>(propertyService.getAllProperties(), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get a page of properties", description = "Retrieves a page of properties")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operation successful")
+    })
+    @GetMapping("/page")
+    public ResponseEntity<Page<PropertyResponse>> getPageOfProperties(@RequestParam(defaultValue = "0") int page,
+                                                                      @RequestParam(defaultValue = "9") int size) {
+        return new ResponseEntity<>(propertyService.getPageOfProperties(page, size), HttpStatus.OK);
     }
 
     @Operation(summary = "Find a property by its Id")

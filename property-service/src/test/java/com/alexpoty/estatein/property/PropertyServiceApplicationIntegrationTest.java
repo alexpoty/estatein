@@ -68,6 +68,20 @@ class PropertyServiceApplicationIntegrationTest {
     }
 
     @Test
+    void shouldReturnPageOfProperties() {
+        // Arrange
+        Property property = createTestProperty();
+        propertyRepository.save(property);
+        // Act and Assert
+        RestAssured.given()
+                .contentType(JSON_CONTENT)
+                .when()
+                .get(BASE_ENDPOINT+"/page")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
     @DisplayName("Should find property By Id")
     void shouldFindByIdAndReturn_propertyResponse() {
         // Arrange

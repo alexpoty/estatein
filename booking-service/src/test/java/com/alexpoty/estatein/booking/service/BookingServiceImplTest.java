@@ -1,6 +1,7 @@
 package com.alexpoty.estatein.booking.service;
 
 import com.alexpoty.estatein.booking.dto.BookingDto;
+import com.alexpoty.estatein.booking.event.BookingPlacedEvent;
 import com.alexpoty.estatein.booking.exceptions.BookingNotFoundException;
 import com.alexpoty.estatein.booking.model.Booking;
 import com.alexpoty.estatein.booking.repository.BookingRepository;
@@ -10,10 +11,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,12 +26,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BookingServiceImplTest {
 
+    private final List<Booking> bookings = new ArrayList<>();
     @Mock
     private BookingRepository bookingRepository;
+    @Mock
+    private KafkaTemplate<String, BookingPlacedEvent> kafkaTemplate;
     @InjectMocks
     private BookingServiceImpl bookingService;
-
-    private final List<Booking> bookings = new ArrayList<>();
     private Booking booking;
     private BookingDto bookingDto;
 
@@ -44,6 +49,7 @@ class BookingServiceImplTest {
                 1L,
                 null,
                 "test",
+                "777777",
                 "test",
                 "test",
                 1L
@@ -87,12 +93,18 @@ class BookingServiceImplTest {
     void shouldCreateBookingReturnBookingDto() {
         // Arrange
         when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
+        @SuppressWarnings("unchecked")
+        CompletableFuture<SendResult<String, BookingPlacedEvent>> future =
+                CompletableFuture.completedFuture(mock(SendResult.class));
+        when(kafkaTemplate.send(anyString(), any(BookingPlacedEvent.class)))
+                .thenReturn((CompletableFuture<SendResult<String, BookingPlacedEvent>>) future);
         // Act
         BookingDto actual = bookingService.createBooking(bookingDto);
         // Assert
         assertThat(actual.name()).isEqualTo(booking.getName());
         assertThat(actual.phone()).isEqualTo(booking.getPhone());
         verify(bookingRepository, times(1)).save(any(Booking.class));
+        verify(kafkaTemplate, times(1)).send(anyString(), any(BookingPlacedEvent.class));
     }
 
     @Test

@@ -1,33 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {PropertyService} from '../../services/property/property.service';
-import {Property} from '../../model/property';
-import {Router} from '@angular/router';
-import {PropertyCardComponent} from '../../shared/property-card/property-card.component';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-properties-page',
   standalone: true,
-  imports: [
-    PropertyCardComponent
-  ],
+  imports: [],
   templateUrl: './properties-page.component.html',
   styleUrl: './properties-page.component.scss'
 })
-export class PropertiesPageComponent implements OnInit{
+export class PropertiesPageComponent {
 
-  private readonly propertyService = inject(PropertyService);
-  private readonly router = inject(Router);
-  properties: Array<Property> = [];
-
-  ngOnInit(): void {
-    this.propertyService.getProperties()
-      .pipe()
-      .subscribe(property => {
-        this.properties = property;
-      })
-  }
-
-   async navigateToPropertyDetailPage(id: number | undefined): Promise<void> {
-      await this.router.navigate(['/property', id])
-  }
 }
