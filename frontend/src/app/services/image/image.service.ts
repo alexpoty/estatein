@@ -12,7 +12,7 @@ export class ImageService {
   constructor(private http: HttpClient) {
   }
 
-  getImage(propertyId: number): Observable<Image> {
+  getImage(propertyId: number | undefined): Observable<Image> {
     return this.http.get<Image>(environment.imageServiceUrl + '?propertyId=' + propertyId);
   }
 

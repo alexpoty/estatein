@@ -13,19 +13,47 @@
 }
 
 .properties-page-hero {
+  background: rgb(38,38,38);
+  background: linear-gradient(225deg, rgba(38,38,38,1) 0%, rgba(38,38,38,0) 53%);
+  padding-top: 140px;
   &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
-
-  &__properties {
+  h1 {
+    font-size: 48px;
+    font-weight: 600;
+    color: white;
+    padding-top: 70px;
   }
-
+  p {
+    color: #999999;
+    max-width: 1358px;
+    padding-bottom: 108px;
+  }
 }
 
 .properties {
+  padding-top: 80px;
   &__title {
+    h2 {
+      color: white;
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    p {
+      color: #999999;
+      max-width: 1340px;
+      margin-bottom: 80px;
+    }
   }
 
   &__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
   &__item {
