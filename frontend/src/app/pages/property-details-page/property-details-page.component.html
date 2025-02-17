@@ -1,5 +1,21 @@
-@for (image of images; track image.id) {
-  <div>
-    <img src="{{image.imageUrl}}" alt="Logo">
-  </div>
-}
+<main class="property-details">
+  <section class="property-details-title">
+    <div class="property-details-title__container container">
+      <div class="property-details-title__title">
+        <h1>{{property.title}}</h1>
+        <span>{{property.location}}</span>
+      </div>
+      <div class="property-details-title__price">
+        Price
+        <span>${{property.price}}</span>
+      </div>
+    </div>
+  </section>
+  <section class="property-details-slider">
+    <div class="container">
+      <div class="property-details-slider__slider">
+        <app-image-slider [slides]="images" />
+      </div>
+    </div>
+  </section>
+</main>

@@ -53,7 +53,7 @@
   &__items {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 20px;
   }
 
   &__item {
@@ -62,11 +62,27 @@
 
 .properties-page-happen {
   &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h2 {
+    font-size: 48px;
+    font-weight: 600;
+    color: white;
+    padding-top: 70px;
+
+  }
+  p {
+    color: #999999;
+    max-width: 1358px;
+    padding-bottom: 108px;
   }
 }
 
 .properties-page-start {
   &__container {
+
   }
 
   &__title {
