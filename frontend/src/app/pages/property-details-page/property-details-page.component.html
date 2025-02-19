@@ -2,19 +2,39 @@
   <section class="property-details-title">
     <div class="property-details-title__container container">
       <div class="property-details-title__title">
-        <h1>{{property.title}}</h1>
-        <span>{{property.location}}</span>
+        <h1>{{ property.title }}</h1>
+        <span>{{ property.location }}</span>
       </div>
       <div class="property-details-title__price">
         Price
-        <span>${{property.price}}</span>
+        <span>${{ property.price }}</span>
       </div>
     </div>
   </section>
   <section class="property-details-slider">
     <div class="container">
       <div class="property-details-slider__slider">
-        <app-image-slider [slides]="images" />
+        <app-image-slider [slides]="images"/>
+      </div>
+    </div>
+  </section>
+  <section class="property-details-description">
+    <div class="property-details-description__container container">
+      <div class="property-details-description__description">
+        <h2>Description</h2>
+        <p>{{ property.description }}</p>
+      </div>
+    </div>
+  </section>
+  <section class="property-details-form">
+    <div class="property-details-form__container container">
+      <div class="property-details-form__title">
+        <h2>Inquire About {{ property.title }}</h2>
+        <p>Interested in this property? Fill out the form below, and our real estate experts will get back to you with
+          more details, including scheduling a viewing and answering any questions you may have.</p>
+      </div>
+      <div class="property-details-form__form">
+
       </div>
     </div>
   </section>

@@ -35,6 +35,11 @@ spec:
                 configMapKeyRef:
                   key: BOOKING_SERVICE_URL
                   name: common-config
+            - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+              valueFrom:
+                  configMapKeyRef:
+                    key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+                    name: common-config
             - name: IMAGE_SERVICE_URL
               valueFrom:
                 configMapKeyRef:

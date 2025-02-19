@@ -66,6 +66,8 @@ spec:
                 secretKeyRef:
                   key: keycloak_admin_password
                   name: keycloak-secrets
+            - name: KC_HTTP_PORT
+              value: "8080"
           volumeMounts:
             - name: keycloak-realm
               mountPath: /opt/keycloak/data/import

@@ -23,8 +23,8 @@ spec:
             - --enable-feature=exemplar-storage
             - --config.file=/etc/prometheus/prometheus.yml
           volumeMounts:
-            - mountPath: prometheus-config
-              name: /etc/prometheus
+            - mountPath: /etc/prometheus
+              name: prometheus-config
       volumes:
         - name: prometheus-config
           configMap:
