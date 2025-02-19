@@ -1,0 +1,21 @@
+<div class="property-card">
+  <div class="property-card__image">
+    <img [src]="imageUrl" alt="Property Image">
+  </div>
+  <div class="property-card__location">
+    {{property.location}}
+  </div>
+  <div class="property-card__title">
+    <span>{{property.title}}</span>
+    <p>{{ property.description }}</p>
+  </div>
+  <div class="property-card__price-btn">
+    <div class="property-card__price">
+      Price
+      <span>${{property.price}}</span>
+    </div>
+    <div class="property-card__button">
+      <button (click)="onClick()">View Property Details</button>
+    </div>
+  </div>
+</div>

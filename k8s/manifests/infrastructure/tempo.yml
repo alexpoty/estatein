@@ -18,11 +18,11 @@ spec:
         - image: grafana/tempo:2.2.2
           name: tempo
           ports:
-            - containerPort: 3110
-              name: Tempo
+            - containerPort: 3200
+              name: tempo
             - containerPort: 9411
               name: zipkin
-          args: [ "-config.file=/etc/tempo.yaml" ]
+          args: [ '-config.file=/etc/tempo.yaml' ]
           volumeMounts:
             - mountPath: /tmp/tempo
               name: tempo-data
@@ -45,10 +45,10 @@ metadata:
   name: tempo
 spec:
   ports:
-    - name: Tempo
-      port: 3110
+    - name: tempo
+      port: 3200
       protocol: TCP
-      targetPort: 3110
+      targetPort: 3200
     - name: zipkin
       port: 9411
       targetPort: 9411

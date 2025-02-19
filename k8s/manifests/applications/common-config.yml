@@ -5,7 +5,8 @@ metadata:
   name: common-config
 data:
   PROPERTY_SERVICE_URL: "http://property-service.default.svc.cluster.local:8080"
+  MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: "http://tempo.default.svc.cluster.local:9411"
   BOOKING_SERVICE_URL: "http://booking-service.default.svc.cluster.local:8081"
   IMAGE_SERVICE_URL: "http://image-service.default.svc.cluster.local:8082"
   SPRING_KAFKA_BOOTSTRAP_SERVERS: "broker.default.svc.cluster.local:29092"
-  LOKI_URL: "loki.default.svc.cluster.local:3100/loki/api/v1/push"
+  LOKI_URL: "http://loki.default.svc.cluster.local:3100/loki/api/v1/push"
